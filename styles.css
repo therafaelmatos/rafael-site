@@ -9,112 +9,150 @@
   --shadow: 0 18px 50px rgba(0,0,0,.55);
   --radius: 22px;
   --max: 1100px;
+
+  /* Anchor offset for fixed header */
+  --nav-offset: 110px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+/* Global reset */
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+html{
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-offset);
+}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background: radial-gradient(1200px 700px at 20% 10%, rgba(124,58,237,.28), transparent 55%),
-              radial-gradient(900px 600px at 90% 20%, rgba(34,197,94,.18), transparent 60%),
-              var(--bg);
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(124,58,237,.28), transparent 55%),
+    radial-gradient(900px 600px at 90% 20%, rgba(34,197,94,.18), transparent 60%),
+    var(--bg);
   color:var(--text);
   line-height:1.45;
   overflow-x:hidden;
 }
-a{color:inherit}
-.container{width:min(var(--max), calc(100% - 48px)); margin:0 auto}
+a{ color:inherit; }
+.container{
+  width:min(var(--max), calc(100% - 48px));
+  margin:0 auto;
+}
 
-/* Nav */
-.nav{position:fixed; inset:14px 0 auto 0; z-index:50; pointer-events:none;}
+/* Prevent sections being hidden under fixed nav when jumping to anchors */
+.section, section{
+  scroll-margin-top: var(--nav-offset);
+}
+
+/* ------------------ NAV ------------------ */
+.nav{
+  position:fixed;
+  inset:14px 0 auto 0;
+  z-index:50;
+  pointer-events:none;
+}
 .nav-inner{
   pointer-events:auto;
   width:min(var(--max), calc(100% - 32px));
   margin:0 auto;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
   padding:12px 14px;
   border:1px solid var(--line);
   background: rgba(10,10,14,.55);
   backdrop-filter: blur(14px);
   border-radius: 999px;
   box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  gap:12px;
 }
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; white-space:nowrap}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
 .dot{
-  width:10px; height:10px; border-radius:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   box-shadow: 0 0 0 6px rgba(124,58,237,.15);
 }
-.links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+
+/* If you're using a logo image in .brand */
+.brand img{
+  height: 60px;
+  width: auto;
+  display:block;
+  object-fit: contain;
+}
+
+.links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
 .pill{
-  display:inline-flex; align-items:center; justify-content:center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   padding:9px 12px;
   border:1px solid var(--line);
   border-radius:999px;
   text-decoration:none;
   color:var(--muted);
-  transition:.18s ease;
   font-weight:650;
   font-size:14px;
   background:rgba(255,255,255,.04);
+  transition:.18s ease;
 }
-.pill:hover{transform:translateY(-1px); color:var(--text); border-color:rgba(255,255,255,.22)}
+.pill:hover{
+  transform:translateY(-1px);
+  color:var(--text);
+  border-color:rgba(255,255,255,.22);
+}
 .pill.primary{
   color:rgba(255,255,255,.95);
   border-color:rgba(124,58,237,.35);
   background: linear-gradient(135deg, rgba(124,58,237,.22), rgba(34,197,94,.12));
 }
 
-/* Hero */
+/* ------------------ HERO + VIDEO BG ------------------ */
 .hero{
-  position: relative;
-  overflow: hidden;
+  position:relative;
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:110px 0 70px;
+  overflow:hidden;
 }
-
-/* The video wrapper must fill the hero */
 .video-bg{
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
 }
 
-/* Make the video fill and crop like a true background */
+/* Downloaded MP4 background video */
 .bg-video{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* key line */
-  object-position: center;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
   transform: scale(1.05);
-  pointer-events: none;
+  filter:saturate(1.05) contrast(1.02);
+  pointer-events:none;
 }
 
-/* Keep your overlay on top of the video */
+/* Overlay to keep text readable */
 .video-overlay{
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-/* Keep the content above everything */
-.hero-inner{
-  position: relative;
-  z-index: 2;
-}
-@media (min-aspect-ratio:16/9){
-  .yt{
-    height: 120vh;
-    width: 213.33vh;
-    min-height: 720px;
-    min-width: 1280px;
-  }
-}
-.video-overlay{
-  position:absolute; inset:0; z-index:1;
+  position:absolute;
+  inset:0;
+  z-index:1;
   background:
     linear-gradient(to bottom, rgba(11,12,16,.68), rgba(11,12,16,.85) 60%, rgba(11,12,16,.98)),
     radial-gradient(900px 500px at 30% 20%, rgba(124,58,237,.22), transparent 65%),
@@ -123,16 +161,14 @@ a{color:inherit}
 }
 
 .hero-inner{
-  position:relative; z-index:2;
+  position:relative;
+  z-index:2;
   display:grid;
   grid-template-columns: 1.15fr .85fr;
   gap:34px;
   align-items:center;
   width:min(var(--max), calc(100% - 48px));
   margin:0 auto;
-}
-@media (max-width: 980px){
-  .hero-inner{grid-template-columns:1fr}
 }
 
 .hero-card{
@@ -162,11 +198,19 @@ h1{
   margin: 0 0 18px;
   max-width: 62ch;
 }
-.cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+
+.cta-row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
 .btn{
-  display:inline-flex; align-items:center; justify-content:center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   padding:12px 14px;
-  border-radius: 999px;
+  border-radius:999px;
   border:1px solid var(--line);
   text-decoration:none;
   font-weight:800;
@@ -174,7 +218,10 @@ h1{
   transition:.18s ease;
   cursor:pointer;
 }
-.btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.22);
+}
 .btn.accent{
   border-color:rgba(124,58,237,.4);
   background: linear-gradient(135deg, rgba(124,58,237,.28), rgba(34,197,94,.14));
@@ -182,24 +229,32 @@ h1{
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(3, 1fr);
   gap:10px;
   margin-top:18px;
 }
 .stat{
-  padding:12px 12px;
+  padding:12px;
   border-radius:16px;
   border:1px solid var(--line);
   background: rgba(0,0,0,.18);
 }
-.stat .n{font-weight:900; font-size:16px}
-.stat .t{color:var(--muted); font-size:12px; margin-top:2px}
-@media (max-width:520px){
-  .stats{grid-template-columns:1fr}
+.stat .n{
+  font-weight:900;
+  font-size:16px;
+}
+.stat .t{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
 }
 
-/* Portrait */
-.portrait-wrap{display:flex; justify-content:center; align-items:center;}
+/* Portrait area */
+.portrait-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 .portrait-card{
   border:1px solid var(--line);
   background: rgba(255,255,255,.06);
@@ -208,9 +263,11 @@ h1{
   box-shadow: var(--shadow);
 }
 .portrait{
-  width:min(420px, 90%);
+  width: 260px; /* adjust here if needed */
+  max-width: 70vw;
   height:auto;
   display:block;
+  margin:0 auto;
   filter: drop-shadow(0 18px 45px rgba(0,0,0,.55));
 }
 .portrait-note{
@@ -220,11 +277,16 @@ h1{
   text-align:center;
 }
 
-/* Sections */
-.section{padding: 68px 0;}
+/* ------------------ SECTIONS ------------------ */
+.section{
+  padding: 68px 0;
+}
 .section-head{
-  display:flex; align-items:flex-end; justify-content:space-between;
-  gap:18px; flex-wrap:wrap;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
   margin-bottom:18px;
 }
 h2{
@@ -232,7 +294,11 @@ h2{
   font-size: clamp(26px, 3vw, 36px);
   letter-spacing:-.4px;
 }
-.lead{margin:0; color:var(--muted); max-width:72ch;}
+.lead{
+  margin:0;
+  color:var(--muted);
+  max-width:72ch;
+}
 
 .grid{
   display:grid;
@@ -240,16 +306,7 @@ h2{
   gap:18px;
   align-items:start;
 }
-@media (max-width: 980px){
-  .grid{grid-template-columns:1fr}
-}
-/* Match logo height to the nav pills */
-.brand img{
-  height: 70px;      /* <- matches pill height */
-  width: auto;
-  display: block;
-  object-fit: contain;
-}
+
 .card{
   border:1px solid var(--line);
   background: rgba(255,255,255,.06);
@@ -262,11 +319,27 @@ h2{
   background: rgba(0,0,0,.22);
   color: rgba(255,255,255,.86);
 }
-.callout.small{margin-top:16px; border-radius:18px; padding:16px;}
-.mini-h{margin:0 0 10px; font-size:18px; letter-spacing:-.2px}
-.muted{color:var(--muted); margin:0 0 14px}
+.callout.small{
+  margin-top:16px;
+  border-radius:18px;
+  padding:16px;
+}
+.mini-h{
+  margin:0 0 10px;
+  font-size:18px;
+  letter-spacing:-.2px;
+}
+.muted{
+  color:var(--muted);
+  margin:0 0 14px;
+}
 
-.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
 .chip{
   padding:9px 10px;
   border-radius:999px;
@@ -277,16 +350,13 @@ h2{
   font-size:13px;
 }
 
-/* Gallery */
+/* ------------------ GALLERY ------------------ */
 .gallery{
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap:12px;
   margin-top:14px;
 }
-@media (max-width: 980px){ .gallery{grid-template-columns: repeat(3,1fr)} }
-@media (max-width: 680px){ .gallery{grid-template-columns: repeat(2,1fr)} }
-
 .thumb{
   appearance:none;
   border:1px solid var(--line);
@@ -298,42 +368,57 @@ h2{
   padding:0;
   cursor:pointer;
   transition:.18s ease;
-  aspect-ratio:1/1;
+  aspect-ratio: 1/1;
 }
-.thumb:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.22)}
-.thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.thumb:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.22);
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
 
-/* Form */
-form{display:grid; gap:10px}
-label span{display:block; font-weight:750; font-size:13px; color:rgba(255,255,255,.86); margin-bottom:6px}
+/* ------------------ FORM ------------------ */
+form{ display:grid; gap:10px; }
+label span{
+  display:block;
+  font-weight:750;
+  font-size:13px;
+  color:rgba(255,255,255,.86);
+  margin-bottom:6px;
+}
 input, textarea{
   width:100%;
-  padding:12px 12px;
+  padding:12px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.16);
   background:rgba(0,0,0,.22);
   color:var(--text);
 }
-textarea{resize:vertical}
+textarea{ resize:vertical; }
 
-/* Footer */
+/* ------------------ FOOTER ------------------ */
 footer{
   padding: 44px 0 60px;
   border-top: 1px solid rgba(255,255,255,.10);
   color: rgba(255,255,255,.70);
 }
-.fineprint{font-size:13px}
+.fineprint{ font-size:13px; }
 
-/* Modal */
+/* ------------------ MODAL ------------------ */
 .modal{
-  position:fixed; inset:0;
+  position:fixed;
+  inset:0;
   display:none;
   place-items:center;
   background: rgba(0,0,0,.72);
   z-index:90;
   padding: 22px;
 }
-.modal.open{display:grid}
+.modal.open{ display:grid; }
 .modal-card{
   width:min(980px, 100%);
   border-radius: 22px;
@@ -344,11 +429,16 @@ footer{
   overflow:hidden;
 }
 .modal-top{
-  display:flex; justify-content:space-between; align-items:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   padding: 12px 12px 10px;
   border-bottom:1px solid rgba(255,255,255,.12);
 }
-.modal-title{font-weight:900; color:rgba(255,255,255,.92)}
+.modal-title{
+  font-weight:900;
+  color:rgba(255,255,255,.92);
+}
 .modal-close{
   border:1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.06);
@@ -358,75 +448,76 @@ footer{
   cursor:pointer;
   font-weight:900;
 }
-.modal-body img{width:100%; height:auto; display:block}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .pill:hover,.btn:hover,.thumb:hover{transform:none}
+.modal-body img{
+  width:100%;
+  height:auto;
+  display:block;
 }
 
-/* ---------- Mobile fixes ---------- */
-@media (max-width: 900px){
-  /* Hero goes single-column */
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 980px){
   .hero-inner{
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap:18px;
   }
-
-  /* Reduce hero padding so content isn’t cramped */
-  .hero{
-    padding: 96px 0 44px;
+  .grid{
+    grid-template-columns: 1fr;
   }
-
-  /* Video sizing still covers the screen */
-  .yt{
-    width: 180vw;
-    height: 101.25vw; /* still 16:9 */
+  .gallery{
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 600px){
-  /* Make the nav bar fit */
+  :root{
+    --radius: 18px;
+    --nav-offset: 100px;
+  }
+
+  .container{
+    width: calc(100% - 24px);
+  }
+
+  .hero{
+    padding: 96px 0 44px;
+  }
+
   .nav-inner{
     width: calc(100% - 20px);
     padding: 8px 10px;
     gap: 8px;
   }
 
-  /* Keep logo pill-height + not too wide */
   .brand img{
     height: 28px;
     max-width: 160px;
   }
 
-  /* Keep the link pills from turning into a messy second row */
-  .links{
-    gap: 6px;
-  }
+  .links{ gap:6px; }
   .pill{
     padding: 7px 10px;
     font-size: 13px;
   }
 
-  /* Cards breathe better on small screens */
-  .hero-card{
-    padding: 18px 16px;
-  }
-  .card{
-    padding: 18px 16px;
+  .hero-card{ padding: 18px 16px; }
+  .card{ padding: 18px 16px; }
+
+  .stats{ grid-template-columns: 1fr; }
+
+  .gallery{ grid-template-columns: repeat(2, 1fr); }
+
+  .portrait{
+    width: 210px;
+    max-width: 65vw;
   }
 
-  /* Stack stats and galleries */
-  .stats{
-    grid-template-columns: 1fr;
-  }
-  .gallery{
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .section{ padding: 44px 0; }
 }
 
 @media (max-width: 380px){
-  /* Ultra small screens: shrink pills a bit more */
+  :root{
+    --nav-offset: 95px;
+  }
   .pill{
     padding: 6px 8px;
     font-size: 12px;
@@ -436,36 +527,8 @@ footer{
     max-width: 140px;
   }
 }
-/* Make the whole page "smaller" on phones */
-@media (max-width: 600px){
-  :root{
-    --radius: 18px;   /* tighter corners */
-  }
-/* Make the hero portrait smaller */
-.portrait{
-  width: 100px;     /* change this number until it feels right */
-  height: auto;
-  display: block;
-  margin: 0 auto;
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .pill:hover, .btn:hover, .thumb:hover{ transform:none; }
 }
-  /* Responsive portrait sizing */
-.portrait{
-  width: min(260px, 70vw);
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-@media (max-width: 600px){
-  .portrait{
-    width: min(210px, 65vw);
-  }
-}
-  /* FORCE the portrait to be smaller (place at very bottom of CSS) */
-.portrait-wrap .portrait-card img.portrait{
-  width: 260px !important;
-  height: auto !important;
-  display: block;
-  margin: 0 auto;
-}
-  .portrait-svg{ width:min(420px, 90%); }
-  
