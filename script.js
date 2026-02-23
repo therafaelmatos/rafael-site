@@ -1,14 +1,17 @@
 // Year
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Smooth scroll for anchor links
+// Smooth scroll for anchor links (don’t interfere with form submits)
 document.addEventListener("click", (e) => {
   const a = e.target.closest('a[href^="#"]');
   if (!a) return;
+
   const id = a.getAttribute("href");
   if (!id || id.length < 2) return;
+
   const el = document.querySelector(id);
   if (!el) return;
+
   e.preventDefault();
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 });
@@ -38,10 +41,5 @@ document.querySelectorAll(".thumb").forEach((btn) => {
   btn.addEventListener("click", () => openModal(btn.dataset.title, btn.dataset.src));
 });
 
-// Demo-only form behavior
-document.getElementById("contactForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const s = document.getElementById("formStatus");
-  s.style.display = "block";
-  s.textContent = "Message drafted (demo). Connect this form to Formspree/Netlify when you’re ready.";
-});
+// ✅ No JS submit handler needed for Formspree.
+// Your form will POST to Formspree normally.
