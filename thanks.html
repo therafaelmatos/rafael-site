@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thanks! | Dr. Rafael Matos</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- NAV (same as home, but simplified) -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Dr. Rafael Matos</span>
+      </div>
+      <nav class="links" aria-label="Primary">
+        <a class="pill" href="/">Home</a>
+        <a class="pill primary" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- THANK YOU HERO -->
+  <header class="hero" style="min-height:100vh;">
+    <div class="video-bg" aria-hidden="true">
+      <!-- No video here — just the overlay glow, using your existing CSS -->
+      <div class="video-overlay"></div>
+    </div>
+
+    <div class="hero-inner" style="grid-template-columns:1fr;">
+      <div class="hero-card" style="max-width: 820px;">
+        <div class="kicker">Message received</div>
+        <h1 style="margin-top:10px;">Thanks — I got your message.</h1>
+        <p class="sub" style="margin-bottom:0;">
+          Appreciate you reaching out. I’ll follow up soon.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn accent" href="/#contact">Back to Contact</a>
+          <a class="btn" href="/">Back to Home</a>
+          <a class="btn" href="https://substack.com/@drmatos" target="_blank" rel="noopener">Read the Blog</a>
+        </div>
+
+        <div class="chips" style="margin-top:14px;">
+          <span class="chip">Speaker</span>
+          <span class="chip">Cultural Systems Strategist</span>
+          <span class="chip">Visual Storyteller</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <footer>
+    <div class="container fineprint">
+      © <span id="year"></span> Dr. Rafael Matos
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
