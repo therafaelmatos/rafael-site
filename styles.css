@@ -532,3 +532,15 @@ footer{
 @media (prefers-reduced-motion: reduce){
   .pill:hover, .btn:hover, .thumb:hover{ transform:none; }
 }
+/* Fix contact form Send button text rendering */
+#contactForm button.btn{
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+#contactForm button.btn *{
+  line-height: 1;
+}
